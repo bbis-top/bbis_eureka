@@ -1,56 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
     <Properties>
-        <Property name="logPrefix">/Users/AOE/data/logs/eureka</Property>
+        <Property name="logPath">/Users/AOE/data/log/bitmove-eureka</Property>
     </Properties>
     <Appenders>
         <Console name="STDOUT_LOG" target="SYSTEM_OUT">
             <PatternLayout pattern="%d %-5p [%t] %C (%M:%L) - %m%n"/>
         </Console>
-        <RollingRandomAccessFile name="INFO_RRA_LOG" fileName="${logPrefix}/info.log" filePattern="${logPrefix}/info-%d{yyyyMMdd}-%i.log">
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="256 MB"/>
-            </Policies>
-            <DefaultRolloverStrategy max="9" compressionLevel="1"/>
+        <File name="FILE_INFO_LOG" fileName="${logPath}/info.log">
             <PatternLayout pattern="%d %-5p [%t] %C (%M:%L) - %m%n"/>
             <Filters>
                 <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
-        </RollingRandomAccessFile>
-        <RollingRandomAccessFile name="ERROR_RRA_LOG" fileName="${logPrefix}/error.log" filePattern="${logPrefix}/error-%d{yyyyMMdd}-%i.log">
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="256 MB"/>
-            </Policies>
-            <DefaultRolloverStrategy max="9" compressionLevel="1"/>
+        </File>
+        <File name="FILE_ERROR_LOG" fileName="${logPath}/error.log">
             <PatternLayout pattern="%d %-5p [%t] %C (%M:%L) - %m%n"/>
             <Filters>
                 <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
-        </RollingRandomAccessFile>
-        <RollingRandomAccessFile name="SQL_RRA_LOG" fileName="${logPrefix}/sql.log" filePattern="${logPrefix}/sql-%d{yyyyMMdd}-%i.log">
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="256 MB"/>
-            </Policies>
-            <DefaultRolloverStrategy max="9" compressionLevel="1"/>
+        </File>
+        <File name="FILE_SQL_LOG" fileName="${logPath}/sql.log">
             <PatternLayout pattern="%d %-5p [%t] %C (%M:%L) - %m%n"/>
-        </RollingRandomAccessFile>
+        </File>
     </Appenders>
 
     <Loggers>
         <Root level="ERROR">
-            <AppenderRef ref="ERROR_RRA_LOG"/>
-        </Root>
-        <Logger name="cn.bitmove.eureka" level="INFO" additivity="false">
             <AppenderRef ref="STDOUT_LOG"/>
-            <AppenderRef ref="INFO_RRA_LOG"/>
-            <AppenderRef ref="ERROR_RRA_LOG"/>
+        </Root>
+        <Logger name="cn.bitmove" level="DEBUG" additivity="false">
+            <AppenderRef ref="STDOUT_LOG"/>
+            <AppenderRef ref="FILE_INFO_LOG"/>
+            <AppenderRef ref="FILE_ERROR_LOG"/>
         </Logger>
         <Logger name="org.jooq.tools" level="DEBUG" additivity="false">
-            <AppenderRef ref="SQL_RRA_LOG"/>
+            <AppenderRef ref="FILE_SQL_LOG"/>
         </Logger>
     </Loggers>
 </configuration>

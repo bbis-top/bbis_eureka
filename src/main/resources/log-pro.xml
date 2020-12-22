@@ -1,52 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
     <Properties>
-        <Property name="logPrefix">/data/logs/eureka</Property>
+        <Property name="logPath">/data/log/bitmove-eureka</Property>
     </Properties>
     <Appenders>
-        <RollingRandomAccessFile name="RRA_INFO_LOG" fileName="${logPath}/info.log" filePattern="${logPath}/info_%d{yyyyMMdd}_%i.log">
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="256 MB"/>
-            </Policies>
-            <DefaultRolloverStrategy max="3" compressionLevel="1"/>
+        <File name="FILE_INFO_LOG" fileName="${logPath}/info.log">
             <PatternLayout pattern="%d %-5p [%t] %C (%M:%L) - %m%n"/>
             <Filters>
                 <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
-        </RollingRandomAccessFile>
-        <RollingRandomAccessFile name="RRA_ERROR_LOG" fileName="${logPath}/error.log" filePattern="${logPath}/error_%d{yyyyMMdd}_%i.log">
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="256 MB"/>
-            </Policies>
-            <DefaultRolloverStrategy max="3" compressionLevel="1"/>
+        </File>
+        <File name="FILE_ERROR_LOG" fileName="${logPath}/error.log">
             <PatternLayout pattern="%d %-5p [%t] %C (%M:%L) - %m%n"/>
             <Filters>
                 <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
-        </RollingRandomAccessFile>
-        <RollingRandomAccessFile name="RRA_SQL_LOG" fileName="${logPath}/sql.log" filePattern="${logPath}/sql_%d{yyyyMMdd}_%i.log">
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="256 MB"/>
-            </Policies>
-            <DefaultRolloverStrategy max="3" compressionLevel="1"/>
+        </File>
+        <File name="FILE_SQL_LOG" fileName="${logPath}/sql.log">
             <PatternLayout pattern="%d %-5p [%t] %C (%M:%L) - %m%n"/>
-        </RollingRandomAccessFile>
+        </File>
     </Appenders>
 
     <Loggers>
         <Root level="ERROR">
-            <AppenderRef ref="RRA_INFO_LOG"/>
+            <AppenderRef ref="FILE_INFO_LOG"/>
         </Root>
         <Logger name="cn.bitmove" level="DEBUG" additivity="false">
-            <AppenderRef ref="RRA_INFO_LOG"/>
-            <AppenderRef ref="RRA_ERROR_LOG"/>
+            <AppenderRef ref="FILE_INFO_LOG"/>
+            <AppenderRef ref="FILE_ERROR_LOG"/>
         </Logger>
         <Logger name="org.jooq.tools" level="DEBUG" additivity="false">
-            <AppenderRef ref="RRA_SQL_LOG"/>
+            <AppenderRef ref="FILE_SQL_LOG"/>
         </Logger>
     </Loggers>
 </configuration>
