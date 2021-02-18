@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
     <Properties>
-        <Property name="LOG_PATH">/Users/AOE/data/log/bitmove-eureka</Property>
+        <Property name="LOG_PATH">/Users/AOE/data/log/bbis-eureka</Property>
         <property name="PATTERN">%d %-5p [%t] %C (%M:%L) - %m%n</property>
     </Properties>
     <Appenders>
@@ -57,7 +57,7 @@
         <Root level="ERROR">
             <AppenderRef ref="STDOUT_LOG"/>
         </Root>
-        <Logger name="cn.bitmove" level="DEBUG" additivity="false">
+        <Logger name="top.bbis" level="DEBUG" additivity="false">
             <AppenderRef ref="STDOUT_LOG"/>
             <AppenderRef ref="FILE_INFO_LOG"/>
             <AppenderRef ref="FILE_ERROR_LOG"/>

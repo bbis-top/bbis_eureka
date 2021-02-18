@@ -1,4 +1,4 @@
-package cn.bitmove.eureka;
+package top.bbis.eureka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
